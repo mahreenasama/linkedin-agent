@@ -1,21 +1,22 @@
 # post_generator.py
 
-import feedparser
+import smtplib
+from email.mime.text import MIMEText
 
-rss = feedparser.parse(
-    "https://spring.io/blog.atom"
-)
-
-latest = rss.entries[0]
-title = latest.title
-link = latest.link
-
-post = f"""
-🚀 Interesting Spring update today:
-{title}
-I found this topic particularly interesting because it shows how the Spring ecosystem continues evolving.
-Read more:
-{link}
-#Java #SpringBoot #Microservices
+post = """
+Today's LinkedIn Post
+AI is transforming modern Java applications...
+#Java #AI
 """
-print(post)
+
+msg = MIMEText(post)
+
+msg["Subject"] = "LinkedIn Post Draft"
+msg["From"] = "media.agent26@gmail.com"
+msg["To"] = "media.agent26@gmail.com"
+
+server = smtplib.SMTP("smtp.gmail.com", 587)
+server.starttls()
+server.login(email_user, email_password)
+server.send_message(msg)
+server.quit()
